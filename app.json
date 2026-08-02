@@ -1,0 +1,1321 @@
+{
+  "id": "ai-customs-duty-drawback-tariff-recovery",
+  "title": "DutyDrawback Recovery Cloud",
+  "tagline": "Import-to-export matching, claim evidence, and tariff recovery operations",
+  "industry": "Global Trade and Customs",
+  "port": 4513,
+  "accent": "#ea580c",
+  "valueLabel": "Recoverable duties",
+  "value": "$7.1M",
+  "workflows": [
+    {
+      "id": "import-normalize",
+      "title": "Import Entry Normalization",
+      "description": "Normalize entry summaries, tariff lines, duties, fees, and product identifiers.",
+      "fields": [
+        {
+          "key": "entryNumber",
+          "label": "Entry Number",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "importDate",
+          "label": "Import Date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "key": "htsCode",
+          "label": "HTS Code",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "dutyPaid",
+          "label": "Duty Paid",
+          "type": "currency",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "entryNumber": "110-3847265-1",
+            "importDate": "2026-09-08",
+            "htsCode": "8471.30.0100",
+            "dutyPaid": 285000
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "entryNumber": "209-7751204-8",
+            "importDate": "2026-08-19",
+            "htsCode": "8517.13.0000",
+            "dutyPaid": 875000
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "entryNumber": "477-1209843-6",
+            "importDate": "2026-08-10",
+            "htsCode": "3926.90.9985",
+            "dutyPaid": 142500
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "export-match",
+      "title": "Import-to-Export Matching",
+      "description": "Match eligible imports to exported or destroyed merchandise.",
+      "fields": [
+        {
+          "key": "importEntry",
+          "label": "Import Entry",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "exportReference",
+          "label": "Export Reference",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "matchMethod",
+          "label": "Match Method",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Direct identification",
+            "Substitution",
+            "Manufacturing"
+          ]
+        },
+        {
+          "key": "quantity",
+          "label": "Matched Quantity",
+          "type": "number",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "importEntry": "Import Entry STD-2026-104",
+            "exportReference": "Export Reference STD-2026-104",
+            "matchMethod": "Manufacturing",
+            "quantity": 125
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "importEntry": "Import Entry RISK-2026-227",
+            "exportReference": "Export Reference RISK-2026-227",
+            "matchMethod": "Manufacturing",
+            "quantity": 975
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "importEntry": "Import Entry EXC-2026-319",
+            "exportReference": "Export Reference EXC-2026-319",
+            "matchMethod": "Manufacturing",
+            "quantity": 41
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "eligibility",
+      "title": "Drawback Eligibility Review",
+      "description": "Evaluate drawback type, time limits, possession, and documentary eligibility.",
+      "fields": [
+        {
+          "key": "claimant",
+          "label": "Claimant",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "drawbackType",
+          "label": "Drawback Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Unused merchandise",
+            "Manufacturing",
+            "Rejected merchandise"
+          ]
+        },
+        {
+          "key": "exportDate",
+          "label": "Export Date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "key": "eligibilityNotes",
+          "label": "Eligibility Notes",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "claimant": "CLM-2026-001842",
+            "drawbackType": "Manufacturing",
+            "exportDate": "2026-09-08",
+            "eligibilityNotes": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "claimant": "CLM-2026-004917",
+            "drawbackType": "Manufacturing",
+            "exportDate": "2026-08-19",
+            "eligibilityNotes": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "claimant": "CLM-2026-007305",
+            "drawbackType": "Manufacturing",
+            "exportDate": "2026-08-10",
+            "eligibilityNotes": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "claim-build",
+      "title": "Claim Package Builder",
+      "description": "Compile line-level calculations, certificates, exports, and supporting records.",
+      "fields": [
+        {
+          "key": "claimNumber",
+          "label": "Claim Number",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "claimPeriod",
+          "label": "Claim Period",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "claimedAmount",
+          "label": "Claimed Amount",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "missingEvidence",
+          "label": "Missing Evidence",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "claimNumber": "CLM-2026-001842",
+            "claimPeriod": "CLM-2026-001842",
+            "claimedAmount": 285000,
+            "missingEvidence": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "claimNumber": "CLM-2026-004917",
+            "claimPeriod": "CLM-2026-004917",
+            "claimedAmount": 875000,
+            "missingEvidence": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "claimNumber": "CLM-2026-007305",
+            "claimPeriod": "CLM-2026-007305",
+            "claimedAmount": 142500,
+            "missingEvidence": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "section-301",
+      "title": "Section 301 Recovery Analysis",
+      "description": "Identify Section 301 duties eligible for drawback and prioritize value.",
+      "fields": [
+        {
+          "key": "product",
+          "label": "Product",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "country",
+          "label": "Country of Origin",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "section301Paid",
+          "label": "Section 301 Paid",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "exportProgram",
+          "label": "Export Program",
+          "type": "text",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "product": "Product STD-2026-104",
+            "country": "Country of Origin STD-2026-104",
+            "section301Paid": 285000,
+            "exportProgram": "Export Program STD-2026-104"
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "product": "Product RISK-2026-227",
+            "country": "Country of Origin RISK-2026-227",
+            "section301Paid": 875000,
+            "exportProgram": "Export Program RISK-2026-227"
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "product": "Product EXC-2026-319",
+            "country": "Country of Origin EXC-2026-319",
+            "section301Paid": 142500,
+            "exportProgram": "Export Program EXC-2026-319"
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "broker-audit",
+      "title": "Broker Data Quality Audit",
+      "description": "Detect missing identifiers, inconsistent classifications, and duplicate entry data.",
+      "fields": [
+        {
+          "key": "broker",
+          "label": "Customs Broker",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "entryPopulation",
+          "label": "Entry Population",
+          "type": "number",
+          "required": true
+        },
+        {
+          "key": "exceptionType",
+          "label": "Exception Type",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "exceptionDetails",
+          "label": "Exception Details",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "broker": "Customs Broker STD-2026-104",
+            "entryPopulation": 125,
+            "exceptionType": "Exception Type STD-2026-104",
+            "exceptionDetails": "Complete: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "broker": "Customs Broker RISK-2026-227",
+            "entryPopulation": 975,
+            "exceptionType": "Exception Type RISK-2026-227",
+            "exceptionDetails": "Critical exception: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "broker": "Customs Broker EXC-2026-319",
+            "entryPopulation": 41,
+            "exceptionType": "Exception Type EXC-2026-319",
+            "exceptionDetails": "Reviewer follow-up: source evidence, financial impact, control context, and documented reviewer rationale are available for analysis."
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "liquidation",
+      "title": "Liquidation Deadline Monitor",
+      "description": "Track liquidation, protest, and drawback filing deadlines.",
+      "fields": [
+        {
+          "key": "entryNumber",
+          "label": "Entry Number",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "liquidationDate",
+          "label": "Liquidation Date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "key": "filingDeadline",
+          "label": "Filing Deadline",
+          "type": "date",
+          "required": true
+        },
+        {
+          "key": "deadlineStatus",
+          "label": "Deadline Status",
+          "type": "select",
+          "required": false,
+          "options": [
+            "On track",
+            "At risk",
+            "Expired"
+          ]
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "entryNumber": "110-3847265-1",
+            "liquidationDate": "2026-09-08",
+            "filingDeadline": "2026-09-08",
+            "deadlineStatus": "On track"
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "entryNumber": "209-7751204-8",
+            "liquidationDate": "2026-08-19",
+            "filingDeadline": "2026-08-19",
+            "deadlineStatus": "Expired"
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "entryNumber": "477-1209843-6",
+            "liquidationDate": "2026-08-10",
+            "filingDeadline": "2026-08-10",
+            "deadlineStatus": "On track"
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    },
+    {
+      "id": "recovery-forecast",
+      "title": "Recovery Forecast",
+      "description": "Forecast eligible recovery, filing timing, fees, and expected cash realization.",
+      "fields": [
+        {
+          "key": "businessUnit",
+          "label": "Business Unit",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "period",
+          "label": "Forecast Period",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "eligibleDuties",
+          "label": "Eligible Duties",
+          "type": "currency",
+          "required": true
+        },
+        {
+          "key": "confidence",
+          "label": "Confidence",
+          "type": "select",
+          "required": false,
+          "options": [
+            "Conservative",
+            "Expected",
+            "Optimistic"
+          ]
+        }
+      ],
+      "states": [
+        "intake",
+        "analyzing",
+        "review",
+        "approved",
+        "closed"
+      ],
+      "examples": [
+        {
+          "id": "standard",
+          "label": "Fill Standard Case",
+          "values": {
+            "businessUnit": "Business Unit STD-2026-104",
+            "period": "Forecast Period STD-2026-104",
+            "eligibleDuties": 285000,
+            "confidence": "Conservative"
+          }
+        },
+        {
+          "id": "high-risk",
+          "label": "Fill High-Risk Case",
+          "values": {
+            "businessUnit": "Business Unit RISK-2026-227",
+            "period": "Forecast Period RISK-2026-227",
+            "eligibleDuties": 875000,
+            "confidence": "Conservative"
+          }
+        },
+        {
+          "id": "exception",
+          "label": "Fill Exception Case",
+          "values": {
+            "businessUnit": "Business Unit EXC-2026-319",
+            "period": "Forecast Period EXC-2026-319",
+            "eligibleDuties": 142500,
+            "confidence": "Conservative"
+          }
+        }
+      ],
+      "aiActions": [
+        {
+          "id": "assess",
+          "label": "Assess Risk & Value"
+        },
+        {
+          "id": "evidence",
+          "label": "Build Evidence Checklist"
+        },
+        {
+          "id": "plan",
+          "label": "Recommend Action Plan"
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "import-normalize",
+      "title": "Import Entry Normalization Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for import entry normalization.",
+      "table": "op_import_normalize",
+      "columns": [
+        {
+          "key": "entryNumber",
+          "label": "Entry Number",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_entryNumber"
+        },
+        {
+          "key": "importDate",
+          "label": "Import Date",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_importDate"
+        },
+        {
+          "key": "htsCode",
+          "label": "HTS Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_htsCode"
+        },
+        {
+          "key": "dutyPaid",
+          "label": "Duty Paid",
+          "type": "currency",
+          "required": false,
+          "dbKey": "data_dutyPaid"
+        }
+      ]
+    },
+    {
+      "id": "export-match",
+      "title": "Import-to-Export Matching Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for import-to-export matching.",
+      "table": "op_export_match",
+      "columns": [
+        {
+          "key": "importEntry",
+          "label": "Import Entry",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_importEntry"
+        },
+        {
+          "key": "exportReference",
+          "label": "Export Reference",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_exportReference"
+        },
+        {
+          "key": "matchMethod",
+          "label": "Match Method",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Direct identification",
+            "Substitution",
+            "Manufacturing"
+          ],
+          "dbKey": "data_matchMethod"
+        },
+        {
+          "key": "quantity",
+          "label": "Matched Quantity",
+          "type": "number",
+          "required": false,
+          "dbKey": "data_quantity"
+        }
+      ]
+    },
+    {
+      "id": "eligibility",
+      "title": "Drawback Eligibility Review Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for drawback eligibility review.",
+      "table": "op_eligibility",
+      "columns": [
+        {
+          "key": "claimant",
+          "label": "Claimant",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_claimant"
+        },
+        {
+          "key": "drawbackType",
+          "label": "Drawback Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Unused merchandise",
+            "Manufacturing",
+            "Rejected merchandise"
+          ],
+          "dbKey": "data_drawbackType"
+        },
+        {
+          "key": "exportDate",
+          "label": "Export Date",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_exportDate"
+        },
+        {
+          "key": "eligibilityNotes",
+          "label": "Eligibility Notes",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_eligibilityNotes"
+        }
+      ]
+    },
+    {
+      "id": "claim-build",
+      "title": "Claim Package Builder Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for claim package builder.",
+      "table": "op_claim_build",
+      "columns": [
+        {
+          "key": "claimNumber",
+          "label": "Claim Number",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_claimNumber"
+        },
+        {
+          "key": "claimPeriod",
+          "label": "Claim Period",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_claimPeriod"
+        },
+        {
+          "key": "claimedAmount",
+          "label": "Claimed Amount",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_claimedAmount"
+        },
+        {
+          "key": "missingEvidence",
+          "label": "Missing Evidence",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_missingEvidence"
+        }
+      ]
+    },
+    {
+      "id": "section-301",
+      "title": "Section 301 Recovery Analysis Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for section 301 recovery analysis.",
+      "table": "op_section_301",
+      "columns": [
+        {
+          "key": "product",
+          "label": "Product",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_product"
+        },
+        {
+          "key": "country",
+          "label": "Country of Origin",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_country"
+        },
+        {
+          "key": "section301Paid",
+          "label": "Section 301 Paid",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_section301Paid"
+        },
+        {
+          "key": "exportProgram",
+          "label": "Export Program",
+          "type": "text",
+          "required": false,
+          "dbKey": "data_exportProgram"
+        }
+      ]
+    },
+    {
+      "id": "broker-audit",
+      "title": "Broker Data Quality Audit Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for broker data quality audit.",
+      "table": "op_broker_audit",
+      "columns": [
+        {
+          "key": "broker",
+          "label": "Customs Broker",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_broker"
+        },
+        {
+          "key": "entryPopulation",
+          "label": "Entry Population",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_entryPopulation"
+        },
+        {
+          "key": "exceptionType",
+          "label": "Exception Type",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_exceptionType"
+        },
+        {
+          "key": "exceptionDetails",
+          "label": "Exception Details",
+          "type": "textarea",
+          "required": false,
+          "dbKey": "data_exceptionDetails"
+        }
+      ]
+    },
+    {
+      "id": "liquidation",
+      "title": "Liquidation Deadline Monitor Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for liquidation deadline monitor.",
+      "table": "op_liquidation",
+      "columns": [
+        {
+          "key": "entryNumber",
+          "label": "Entry Number",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_entryNumber"
+        },
+        {
+          "key": "liquidationDate",
+          "label": "Liquidation Date",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_liquidationDate"
+        },
+        {
+          "key": "filingDeadline",
+          "label": "Filing Deadline",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_filingDeadline"
+        },
+        {
+          "key": "deadlineStatus",
+          "label": "Deadline Status",
+          "type": "select",
+          "required": false,
+          "options": [
+            "On track",
+            "At risk",
+            "Expired"
+          ],
+          "dbKey": "data_deadlineStatus"
+        }
+      ]
+    },
+    {
+      "id": "recovery-forecast",
+      "title": "Recovery Forecast Register",
+      "description": "Operational records, ownership, status, financial value, and evidence for recovery forecast.",
+      "table": "op_recovery_forecast",
+      "columns": [
+        {
+          "key": "businessUnit",
+          "label": "Business Unit",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_businessUnit"
+        },
+        {
+          "key": "period",
+          "label": "Forecast Period",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_period"
+        },
+        {
+          "key": "eligibleDuties",
+          "label": "Eligible Duties",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_eligibleDuties"
+        },
+        {
+          "key": "confidence",
+          "label": "Confidence",
+          "type": "select",
+          "required": false,
+          "options": [
+            "Conservative",
+            "Expected",
+            "Optimistic"
+          ],
+          "dbKey": "data_confidence"
+        }
+      ]
+    },
+    {
+      "id": "import-ledger",
+      "title": "Import Entry Ledger",
+      "description": "Entries, tariff classifications, customs values, duties, and liquidation dates.",
+      "table": "op_import_ledger",
+      "columns": [
+        {
+          "key": "entryNumber",
+          "label": "Entry Number",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_entryNumber"
+        },
+        {
+          "key": "htsCode",
+          "label": "HTS Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_htsCode"
+        },
+        {
+          "key": "customsValue",
+          "label": "Customs Value",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_customsValue"
+        },
+        {
+          "key": "liquidationDate",
+          "label": "Liquidation Date",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_liquidationDate"
+        }
+      ]
+    },
+    {
+      "id": "export-register",
+      "title": "Export Shipment Register",
+      "description": "Exports, destinations, proof, products, and drawback availability.",
+      "table": "op_export_register",
+      "columns": [
+        {
+          "key": "exportReference",
+          "label": "Export Reference",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_exportReference"
+        },
+        {
+          "key": "destination",
+          "label": "Destination",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_destination"
+        },
+        {
+          "key": "exportDate",
+          "label": "Export Date",
+          "type": "date",
+          "required": true,
+          "dbKey": "data_exportDate"
+        },
+        {
+          "key": "exportValue",
+          "label": "Export Value",
+          "type": "currency",
+          "required": true,
+          "dbKey": "data_exportValue"
+        }
+      ]
+    },
+    {
+      "id": "classification-master",
+      "title": "Product Classification Master",
+      "description": "Products, HTS classifications, origin, rulings, and review dates.",
+      "table": "op_classification_master",
+      "columns": [
+        {
+          "key": "sku",
+          "label": "SKU",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_sku"
+        },
+        {
+          "key": "product",
+          "label": "Product",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_product"
+        },
+        {
+          "key": "htsCode",
+          "label": "HTS Code",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_htsCode"
+        },
+        {
+          "key": "countryOfOrigin",
+          "label": "Country of Origin",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_countryOfOrigin"
+        }
+      ]
+    },
+    {
+      "id": "broker-scorecard",
+      "title": "Customs Broker Scorecard",
+      "description": "Entry quality, timeliness, classification exceptions, and recovery support.",
+      "table": "op_broker_scorecard",
+      "columns": [
+        {
+          "key": "broker",
+          "label": "Broker",
+          "type": "text",
+          "required": true,
+          "dbKey": "data_broker"
+        },
+        {
+          "key": "entryCount",
+          "label": "Entry Count",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_entryCount"
+        },
+        {
+          "key": "errorRate",
+          "label": "Error Rate %",
+          "type": "number",
+          "required": true,
+          "dbKey": "data_errorRate"
+        },
+        {
+          "key": "serviceNotes",
+          "label": "Service Notes",
+          "type": "textarea",
+          "required": true,
+          "dbKey": "data_serviceNotes"
+        }
+      ]
+    }
+  ],
+  "domainProduct": {
+    "home": "Customs Recovery Operations",
+    "context": "Entry normalization, import-to-export drawback matching, claim packages, liquidation deadlines, and Section 301 recovery.",
+    "features": [
+      {
+        "id": "entry-normalization",
+        "title": "Import Entry Normalization",
+        "description": "Validate entry summaries, tariff lines, origin, duties, fees, part numbers, and broker data before matching.",
+        "view": "control",
+        "modules": [
+          "import-normalize",
+          "import-ledger"
+        ],
+        "actions": [
+          {
+            "id": "accept-entry",
+            "label": "Accept Normalized Entry",
+            "nextStatus": "Approved",
+            "auditDetail": "Accepted normalized entry and tariff-line data for drawback matching."
+          },
+          {
+            "id": "return-broker",
+            "label": "Return Entry to Broker",
+            "nextStatus": "Investigating",
+            "auditDetail": "Returned incomplete or inconsistent entry data to the customs broker."
+          }
+        ]
+      },
+      {
+        "id": "drawback-matching",
+        "title": "Import-to-Export Drawback Matching",
+        "description": "Create direct-identification, substitution, or manufacturing matches with quantity and time-limit controls.",
+        "view": "reconciliation",
+        "modules": [
+          "export-match",
+          "export-register"
+        ],
+        "actions": [
+          {
+            "id": "confirm-match",
+            "label": "Confirm Drawback Match",
+            "nextStatus": "Approved",
+            "auditDetail": "Confirmed import-to-export match, quantity, eligibility, and lineage."
+          },
+          {
+            "id": "break-match",
+            "label": "Break Unsupported Match",
+            "nextStatus": "Review",
+            "auditDetail": "Removed a match that failed identification, quantity, or timing rules."
+          }
+        ]
+      },
+      {
+        "id": "claim-package",
+        "title": "Drawback Claim Package",
+        "description": "Assemble calculations, bills of material, certificates, export proof, waivers, and claimant declarations.",
+        "view": "evidence",
+        "modules": [
+          "claim-build",
+          "export-register"
+        ],
+        "actions": [
+          {
+            "id": "validate-claim",
+            "label": "Validate Claim Package",
+            "nextStatus": "Review",
+            "auditDetail": "Validated claim-line calculations and required supporting documents."
+          },
+          {
+            "id": "file-claim",
+            "label": "Authorize ACE Filing",
+            "nextStatus": "Approved",
+            "auditDetail": "Authorized the controlled drawback claim for ACE filing."
+          }
+        ]
+      },
+      {
+        "id": "liquidation-calendar",
+        "title": "Liquidation & Protest Calendar",
+        "description": "Track liquidation, PSC, protest, and drawback deadlines with owner escalation and filing dependencies.",
+        "view": "deadline",
+        "modules": [
+          "liquidation",
+          "import-ledger"
+        ],
+        "actions": [
+          {
+            "id": "escalate-deadline",
+            "label": "Escalate Filing Deadline",
+            "nextStatus": "Investigating",
+            "auditDetail": "Escalated an approaching customs filing deadline."
+          },
+          {
+            "id": "confirm-filing",
+            "label": "Confirm Timely Filing",
+            "nextStatus": "Approved",
+            "auditDetail": "Confirmed filing acceptance before the applicable deadline."
+          }
+        ]
+      },
+      {
+        "id": "section-301",
+        "title": "Section 301 Recovery",
+        "description": "Identify additional duties eligible for drawback and prioritize recovery by product, origin, entry, and export program.",
+        "view": "reconciliation",
+        "modules": [
+          "section-301",
+          "classification-master"
+        ],
+        "actions": [
+          {
+            "id": "qualify-duty",
+            "label": "Qualify Section 301 Duty",
+            "nextStatus": "Review",
+            "auditDetail": "Qualified Section 301 duty for claim development."
+          },
+          {
+            "id": "approve-recovery",
+            "label": "Approve Recovery Position",
+            "nextStatus": "Approved",
+            "auditDetail": "Approved the Section 301 recovery position and evidence basis."
+          }
+        ]
+      }
+    ]
+  },
+  "integrations": [
+    {
+      "id": "integration-1",
+      "name": "ACE entry feed",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-2",
+      "name": "Customs broker feed",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-3",
+      "name": "ERP shipments",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-4",
+      "name": "Freight forwarder export feed",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    },
+    {
+      "id": "integration-5",
+      "name": "Product classification master",
+      "category": "Domain data source",
+      "mode": "Read-only demo connector"
+    }
+  ],
+  "featureCount": 40,
+  "seededRecords": 300,
+  "demoUsers": 3,
+  "apiPort": 5513,
+  "dbName": "profit_ai_customs_duty_drawback_tariff_recovery"
+}

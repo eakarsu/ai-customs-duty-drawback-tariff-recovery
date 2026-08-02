@@ -1,0 +1,3 @@
+# Domain schema field names; these are not credentials or secret values.
+app.json:generic-api-key:375
+app.json:generic-api-key:880
