@@ -7,6 +7,15 @@
   "accent": "#ea580c",
   "valueLabel": "Recoverable duties",
   "value": "$7.1M",
+  "commercialExtension": {
+    "title": "Duty Drawback Recovery Lab",
+    "summary": "Estimate recoverable duties and stage ACE, broker, ERP, inventory, export, and claim-receipt integrations.",
+    "baselineLabel": "Annual duties and fees", "volumeLabel": "Annual import entries", "unitValueLabel": "Average duties per entry", "opportunityRateLabel": "Drawback-eligible share", "captureRateLabel": "Expected recovery rate",
+    "defaults": { "volume": 14000, "unitValue": 1850, "opportunityRate": 12, "captureRate": 80 },
+    "pricing": "Platform fee by entry volume plus a success fee on accepted and paid drawback claims.",
+    "milestones": ["Normalize one importer and broker entry feed", "Match import lots to export or destruction evidence", "Approve substitution and eligibility rules", "Submit claims and reconcile liquidation payments"],
+    "connectors": [{"name":"ACE / customs broker","status":"Pilot","purpose":"Entry summaries, tariff lines, duties, and liquidation","evidence":"Entry, line, version, broker receipt, and source timestamps"},{"name":"ERP and inventory genealogy","status":"Planned","purpose":"Part, lot, BOM, and substitution lineage","evidence":"Traceable inventory transformations and quantity balances"},{"name":"Export documentation","status":"Planned","purpose":"Export and destruction eligibility","evidence":"Shipment, filing, date, destination, and retained proof"}]
+  },
   "workflows": [
     {
       "id": "import-normalize",
